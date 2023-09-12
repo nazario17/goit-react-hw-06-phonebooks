@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { renderFilter } from 'redux/filterSlice';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setFilter, selectFilter } from '../redux/filterSlice'; // Імпортуйте дії та селектори зі slice
 
 import { StyledAppWrapper } from 'App.styled';
 import ContactForms from './ContactForms/ContactForms';
@@ -8,13 +8,12 @@ import ContactList from './ContactList/ContactList';
 import Filter from './Filter/Filter';
 
 const App = () => {
-  const [filter, setFilter] = useState('');
+  const filter = useSelector(selectFilter); // Отримуємо значення фільтру зі Store
   const dispatch = useDispatch();
 
   const changeFilterData = event => {
     const { value } = event.currentTarget;
-    setFilter(value);
-    dispatch(renderFilter(value));
+    dispatch(setFilter(value)); // Діспатчимо дію для оновлення значення фільтру в Redux Store
   };
 
   return (
